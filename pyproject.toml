@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "fastapi-blog"
+version = "0.1.0"
+description = ""
+authors = ["Asadhimself <theavenger1712@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.110.3"
+uvicorn = "^0.29.0"
+sqlalchemy = "^2.0.29"
+psycopg2 = "^2.9.9"
+python-dotenv = "^1.0.1"
+alembic = "^1.13.1"
+pydantic = {extras = ["email"], version = "^2.7.1"}
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

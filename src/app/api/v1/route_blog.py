@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from db.repository.blog import list_blogs, retrieve_blog, update_blog
+from db.repository.blog import delete_blog, list_blogs, retrieve_blog, update_blog
 from schemas.blog import CreateBlog, ShowBlog
 from db.session import get_db
 
@@ -31,7 +31,7 @@ def get_all_blogs(db: Session = Depends(get_db)):
     return blogs
 
 
-@router.put("/{id}/", response_model=ShowBlog)
+@router.put("/update/{id}/", response_model=ShowBlog)
 def update_blog_by_id(id: int, db: Session = Depends(get_db)):
     blog = update_blog(id=id, blog=blog, author_id=1, db=db)
     if not blog:
@@ -40,3 +40,10 @@ def update_blog_by_id(id: int, db: Session = Depends(get_db)):
         )
     return blog
 
+
+@router.delete("/delete/{id}/")
+def delete_blog_by_id(id: int, db: Session = Depends(get_db)):
+    message = delete_blog(id=id, author_id=1, db=db)
+    if message.get("error"):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="error")
+    return {"msg": f"Successfully deleted blog with id {id}"}
